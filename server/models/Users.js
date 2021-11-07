@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         isActive: {
             type: DataTypes.BOOLEAN,
             allowNull: false
+        },
+        profilePhoto: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        backgroundPhoto: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     })
 
@@ -49,8 +57,6 @@ module.exports = (sequelize, DataTypes) => {
         })
 
     }
-
-
 
 
     return Users
