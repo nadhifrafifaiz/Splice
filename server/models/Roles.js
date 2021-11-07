@@ -7,12 +7,5 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
 
-    Roles.associate = (models) => {
-        Roles.hasOne(models.Users, {
-            onDelete: "cascade"
-        })
-    }
-
-
     return Roles
 }

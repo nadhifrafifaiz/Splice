@@ -13,21 +13,21 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         isActive: {
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
         profilePhoto: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         backgroundPhoto: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
+        },
+        roleId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     })
 
