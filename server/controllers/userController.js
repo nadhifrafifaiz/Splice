@@ -1,6 +1,8 @@
 const { registerValidation } = require("../helper/validation")
 const { Users } = require("../models/index")
 const bcrypt = require('bcrypt')
+const { createToken } = require("../helper/createToken")
+const transporter = require("../helper/nodemailer")
 
 module.exports = {
     Register: async (req, res) => {
@@ -15,12 +17,34 @@ module.exports = {
         console.log(emailExist);
         if (emailExist) return res.status(400).send('Email already exist')
 
+
         //Hash password
         const hashed = await bcrypt.hash(req.body.password, 10)
-        console.log({ ...req.body, password: hashed });
+        const addedUser = await Users.create({ ...req.body, password: hashed })
 
-        await Users.create({ ...req.body, password: hashed })
+        // Create Token
+        const getNewUser = await Users.findByPk(addedUser._previousDataValues.id)
+        let { id, email, username, isActive, roleId } = getNewUser
+        let token = createToken({ id, email, username, isActive, roleId })
 
-        return res.status(200).send({ message: "Registration Success" })
+        // Create Email
+        let mail = {
+            from: `Admin splace`,
+            to: `${email}`,
+            subject: 'Account Verification',
+            html: `<a href='http://localhost:3000/authentication/${token}'>Click here for verification your account<a/>`
+        }
+
+        transporter.sendMail(mail, async (errMail, resMail) => {
+            if (errMail) {
+                console.log("aku error");
+                await Users.destroy({
+                    where: { id: id },
+                    force: true
+                })
+                return res.status(500).send({ message: "Registration Failed", success: false, err: errMail })
+            }
+            return res.status(200).send({ message: "Registration success check your email", success: true })
+        })
     }
 }

@@ -10,11 +10,6 @@ const registerValidation = (data) => {
         profilePhoto: Joi.string().required(),
         backgroundPhoto: Joi.string().required(),
         roleId: Joi.number().required()
-
-        //         "isActive":false,
-        //  "profilePhoto":"profile.jpeg",
-        //  "backgroundPhoto":"background.png",
-        //  "RoleId":2  
     })
     return schema.validate(data)
 }
