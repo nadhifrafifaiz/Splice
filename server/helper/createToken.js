@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     createToken: (payload) => {
         return jwt.sign(payload, "splace1412", {
-            expiresIn: '24h'
+            expiresIn: '1h'
         })
     }
 }

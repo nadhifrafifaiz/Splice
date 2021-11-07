@@ -14,7 +14,6 @@ module.exports = {
 
         // Check if email exist
         const emailExist = await Users.findOne({ where: { email: req.body.email } })
-        console.log(emailExist);
         if (emailExist) return res.status(400).send('Email already exist')
 
 
@@ -46,5 +45,21 @@ module.exports = {
             }
             return res.status(200).send({ message: "Registration success check your email", success: true })
         })
+
+
+    },
+    verification: async (req, res) => {
+        try {
+            let { id } = req.user
+            await Users.update(
+                { isActive: true }, { where: { id: id } })
+            return res.status(200).send({ message: "Your account is verified" })
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    },
+    login: async (req, res) => {
+        console.log("Aku login");
     }
+
 }
