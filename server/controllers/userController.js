@@ -1,4 +1,4 @@
-const { registerValidation } = require("../helper/validation")
+const { registerValidation, loginValidation } = require("../helper/validation")
 const { Users } = require("../models/index")
 const bcrypt = require('bcrypt')
 const { createToken } = require("../helper/createToken")
@@ -59,7 +59,33 @@ module.exports = {
         }
     },
     login: async (req, res) => {
-        console.log("Aku login");
+
+        // validate data
+        const { error } = loginValidation(req.body)
+        if (error) {
+            return res.status(400).send(error.details[0].message)
+        }
+
+        // Check if username
+        const userExist = await Users.findOne({ where: { username: req.body.username } })
+        if (!userExist) return res.status(400).send('User is not exist')
+
+        // Check password
+        const validPass = await bcrypt.compare(req.body.password, userExist.password)
+        if (!validPass) return res.status(400).send('Invalid password')
+
+        // Create Token
+        let { id, email, username, isActive, roleId } = userExist
+        let token = createToken({ id, email, username, isActive, roleId })
+
+        if (isActive === false) {
+            return res.status(200).send({ message: "Your account need to be verify" })
+        }
+
+        return res.status(200).send({ message: "Masuk pak eko", token: token })
+
+
+
     }
 
 }
