@@ -36,7 +36,6 @@ module.exports = {
 
         transporter.sendMail(mail, async (errMail, resMail) => {
             if (errMail) {
-                console.log("aku error");
                 await Users.destroy({
                     where: { id: id },
                     force: true
@@ -47,6 +46,44 @@ module.exports = {
         })
 
 
+    },
+    resend: async (req, res) => {
+        // validate data
+        const { error } = loginValidation(req.body)
+        if (error) {
+            return res.status(400).send(error.details[0].message)
+        }
+
+        // Check if username
+        const userExist = await Users.findOne({ where: { username: req.body.username } })
+        if (!userExist) return res.status(400).send('User is not exist')
+
+        // Check password
+        const validPass = await bcrypt.compare(req.body.password, userExist.password)
+        if (!validPass) return res.status(400).send('Invalid password')
+
+        // Create Token
+        let { id, email, username, isActive, roleId } = userExist
+        let token = createToken({ id, email, username, isActive, roleId })
+
+        // Create Email
+        let mail = {
+            from: `Admin splace`,
+            to: `${email}`,
+            subject: 'Account Verification',
+            html: `<a href='http://localhost:3000/authentication/${token}'>Click here for verification your account<a/>`
+        }
+
+        transporter.sendMail(mail, async (errMail, resMail) => {
+            if (errMail) {
+                await Users.destroy({
+                    where: { id: id },
+                    force: true
+                })
+                return res.status(500).send({ message: "Failed", success: false, err: errMail })
+            }
+            return res.status(200).send({ message: "Check your email", success: true })
+        })
     },
     verification: async (req, res) => {
         try {
@@ -82,7 +119,7 @@ module.exports = {
             return res.status(200).send({ message: "Your account need to be verify" })
         }
 
-        return res.status(200).send({ message: "Masuk pak eko", token: token })
+        return res.status(200).send({ message: "Successfully login", token: token })
 
 
 
