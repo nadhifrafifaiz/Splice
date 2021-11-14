@@ -1,5 +1,5 @@
 const { postValidation } = require("../helper/validation")
-const { Posts, Users } = require("../models/index")
+const { Posts, Users, PostLikes } = require("../models/index")
 
 module.exports = {
     AddPost: async (req, res) => {
@@ -32,6 +32,19 @@ module.exports = {
         try {
             const listOfPosts = await Posts.findAll()
             res.status(200).send(listOfPosts)
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    },
+    LikeAPost: async (req, res) => {
+        try {
+            const like = req.body
+            const checkLiked = await PostLikes.findAll({ where: { PostId: like.PostId, UserId: like.UserId } })
+            if (checkLiked.length === 0) {
+                await PostLikes.create(like)
+                return res.status(200).send({ like, message: "Liked Success" })
+            }
+            return res.status(200).send({ message: "You already liked this post" })
         } catch (error) {
             res.status(400).send(error)
         }
