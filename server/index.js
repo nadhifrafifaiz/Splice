@@ -4,13 +4,14 @@ const cors = require('cors')
 const PORT = "3001"
 const app = express()
 const db = require('./models')
-const { userRouter } = require("./routers")
+const { userRouter, postRouter } = require("./routers")
 
 app.use(express.json())
 app.use(cors())
 
 
 app.use("/auth", userRouter);
+app.use("/posts", postRouter);
 
 
 db.sequelize.sync().then(() => {
