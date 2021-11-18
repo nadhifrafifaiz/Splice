@@ -1,15 +1,19 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import styles from './Auth.module.css'
 import { FaFacebookSquare, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { API_URL } from '../../helper/index'
+import { registerUser } from '../../redux/actions/user'
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Spinner } from "react-bootstrap";
 
 
 
 function Register() {
+    const dispatch = useDispatch()
+    const userGlobal = useSelector(state => state.user)
 
     const registerInitialValues = {
         username: "",
@@ -32,13 +36,9 @@ function Register() {
             .required("Confirm Password Required"),
     })
 
-    const register = async (data) => {
-        const { username, email, password } = data
+    const register = (data) => {
         try {
-            const registerResponse = await axios.post(`${API_URL}/auth/register`, {
-                username, email, password
-            })
-            console.log(registerResponse);
+            dispatch(registerUser(data))
         } catch (error) {
             console.log(error);
         }
@@ -49,7 +49,7 @@ function Register() {
             <div className={styles['auth-container']}>
                 <h1 className={styles.title}>Sign Up</h1>
 
-                {/* <p className={styles.error}>TIDAK BOLEH MASUK GAN</p> */}
+                <p className={styles.error}>{userGlobal.message}</p>
                 <Formik
                     initialValues={registerInitialValues}
                     onSubmit={register}
@@ -88,9 +88,14 @@ function Register() {
                             autoComplete="off"
                             className={styles.input}
                         />
-                        <button className={styles.button} type="submit">
-                            Sign Up
-                        </button>
+                        {
+                            userGlobal.loading ?
+                                <Spinner animation="border" />
+                                :
+                                <button className={styles.button} type="submit">
+                                    Sign Up
+                                </button>
+                        }
                     </Form>
                 </Formik>
 
