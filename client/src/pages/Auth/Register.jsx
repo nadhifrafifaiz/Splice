@@ -4,6 +4,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import styles from './Auth.module.css'
 import { FaFacebookSquare, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { API_URL } from '../../helper/index'
 
 
 
@@ -30,8 +32,16 @@ function Register() {
             .required("Confirm Password Required"),
     })
 
-    const register = (data) => {
-        console.log(data);
+    const register = async (data) => {
+        const { username, email, password } = data
+        try {
+            const registerResponse = await axios.post(`${API_URL}/auth/register`, {
+                username, email, password
+            })
+            console.log(registerResponse);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

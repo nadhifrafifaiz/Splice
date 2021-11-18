@@ -14,12 +14,22 @@ module.exports = {
 
         // Check if email exist
         const emailExist = await Users.findOne({ where: { email: req.body.email } })
-        if (emailExist) return res.status(400).send('Email already exist')
+        if (emailExist) return res.status(200).send({ message: 'Email already exist', success: false })
 
+        // Check if username exist
+        const usernameExist = await Users.findOne({ where: { username: req.body.username } })
+        if (usernameExist) return res.status(200).send({ message: 'Username already exist', success: false })
 
         //Hash password
         const hashed = await bcrypt.hash(req.body.password, 10)
-        const addedUser = await Users.create({ ...req.body, password: hashed })
+        const addedUser = await Users.create({
+            ...req.body,
+            password: hashed,
+            isActive: false,
+            profilePhoto: "profile.jpeg",
+            backgroundPhoto: "background.png",
+            roleId: 2
+        })
 
         // Create Token
         const getNewUser = await Users.findByPk(addedUser._previousDataValues.id)
@@ -44,8 +54,6 @@ module.exports = {
             }
             return res.status(200).send({ message: "Registration success check your email", success: true })
         })
-
-
     },
     resend: async (req, res) => {
         // validate data
