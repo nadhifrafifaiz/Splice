@@ -5,33 +5,45 @@ import styles from './Auth.module.css'
 import { FaFacebookSquare, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 
-function SignIn() {
-    const singinInitialValues = {
+
+
+function Register() {
+
+    const registerInitialValues = {
         username: "",
-        password: ""
+        email: "",
+        password: "",
     }
 
-    const signinValidationSchema = Yup.object().shape({
-        username: Yup.string().min(6).required("Username is Required"),
-        password: Yup.string().min(6).required("Password is Required")
+    const registerValidationSchema = Yup.object().shape({
+        username: Yup.string().min(6).required("Username Is Required"),
+        email: Yup.string().email("Wrong Email Format").required("Email Is Required"),
+        password: Yup.string().min(6).required("Password Is Required"),
+        confirmPassword: Yup.string().min(6)
+            .when("password", {
+                is: (val) => (val && val.length > 0 ? true : false),
+                then: Yup.string().oneOf(
+                    [Yup.ref("password")],
+                    "Password is not match"
+                ),
+            })
+            .required("Confirm Password Required"),
     })
 
-    const signin = (data) => {
+    const register = (data) => {
         console.log(data);
     }
 
     return (
         <>
             <div className={styles['auth-container']}>
-                <h1 className={styles.title}>Slace</h1>
-                <h4 className={styles.subtitle}>Free, No Judgment, Enjoy</h4>
-                <p className={styles.description}>Sometimes we need a safe place to be ourselves</p>
+                <h1 className={styles.title}>Sign Up</h1>
 
                 {/* <p className={styles.error}>TIDAK BOLEH MASUK GAN</p> */}
                 <Formik
-                    initialValues={singinInitialValues}
-                    onSubmit={signin}
-                    validationSchema={signinValidationSchema}
+                    initialValues={registerInitialValues}
+                    onSubmit={register}
+                    validationSchema={registerValidationSchema}
                 >
                     <Form className={styles.form}>
                         <ErrorMessage name="username" component="span" className={styles.error} />
@@ -39,6 +51,14 @@ function SignIn() {
                             name="username"
                             type="text"
                             placeholder="username"
+                            autoComplete="off"
+                            className={styles.input}
+                        />
+                        <ErrorMessage name="email" component="span" className={styles.error} />
+                        <Field
+                            name="email"
+                            type="email"
+                            placeholder="email"
                             autoComplete="off"
                             className={styles.input}
                         />
@@ -50,15 +70,23 @@ function SignIn() {
                             autoComplete="off"
                             className={styles.input}
                         />
+                        <ErrorMessage name="confirmPassword" component="span" className={styles.error} />
+                        <Field
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Confirm Password"
+                            autoComplete="off"
+                            className={styles.input}
+                        />
                         <button className={styles.button} type="submit">
-                            Sign In
+                            Sign Up
                         </button>
                     </Form>
                 </Formik>
 
                 <div className={styles['cta-container']}>
-                    <p className={styles.cta}>Need some space? you can be <Link to="/" className={styles.Link}><span className={styles["cta-decor"]}>Anonymous</span></Link> here</p>
-                    <p className={styles.cta}>Don't have an account yet? Click <Link to="/register" className={styles.Link}><span className={styles["cta-decor"]}>Here</span></Link> to Sign Up</p>
+                    <p className={styles.cta}>Need some space? you can be <Link to="/signup" className={styles.Link}><span className={styles["cta-decor"]}>Anonymous</span></Link> here</p>
+                    <p className={styles.cta}>Already have an account? <Link to="/" className={styles.Link}><span className={styles["cta-decor"]}>Login</span></Link> now</p>
                 </div>
             </div>
 
@@ -85,4 +113,4 @@ function SignIn() {
     )
 }
 
-export default SignIn
+export default Register

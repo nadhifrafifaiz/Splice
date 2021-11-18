@@ -1,3 +1,10 @@
+:root {
+    --secondary: #374785;
+    --secondary-hover: #3b53b3;
+    --primary: #F8E9A1;
+    --white:#EEEEEE;
+  }
+
 .auth-container{
     display: flex;
     flex-direction: column;
@@ -7,7 +14,7 @@
     background-position: center;
     height: 80vh;
     padding-top:1em;
-    background-color: #eee;
+    background-color: var(--white);
     background-image:url('../../assets/images/hero.jpeg') ;
 }
 
@@ -22,7 +29,7 @@
 }
 
 .input{
-    background-color: #eee;
+    background-color: var(--white);
     border: none;
     padding: 12px 15px;
     margin: 8px 0;
@@ -98,11 +105,17 @@
   }
 
 .button{
-    color: #F8E9A1;
+    color: var(--primary);
     padding: 15px 20px;
     border: none;   
-    background: #374785;  
+    background: var(--secondary);  
     border-radius: 15px;
+    transition: 0.2s;
+}  
+.button:hover{
+    cursor: pointer;
+    color: var(--white);
+    background: var(--secondary-hover);  
 }  
 
 .title{
@@ -111,7 +124,7 @@
     /* line-height: 20px; */
     text-align: center;
     letter-spacing: -0.5px;
-    color: #F8E9A1;
+    color: var(--primary);
 }
 
 .subtitle{
@@ -119,7 +132,7 @@
     font-size: 1.5rem;    
     text-align: center;
     letter-spacing: -0.5px;
-    color: #F8E9A1;
+    color: var(--primary);
 }
 
 .description{
@@ -128,7 +141,7 @@
     font-size: 1rem;
     text-align: center;
     letter-spacing: -0.5px;
-    color: #F8E9A1;
+    color: var(--primary);
 }
 
 .footer{
@@ -150,6 +163,14 @@
 .footer-help-item{
     font-size:0.9rem;
     font-weight: bolder;
+    transition: 0.5s;
+}
+
+.footer-help-item:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    font-weight: bolder;
+    color: var(--secondary);
 }
 
 .footer-line{
@@ -168,6 +189,14 @@
 
 .icon{
     font-size: 2rem;
+    transition: 0.5s;
+}
+
+.icon:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    font-size: 2rem;
+    color: var(--secondary);
 }
 
 .cta-container{
@@ -175,6 +204,26 @@
 }
 
 .cta{
-    color: #FFFFFF;
+    color: var(--white);
     font-size: 0.75em;
+    transition: 1s;
+}
+
+.cta-decor{
+    color: var(--primary);
+    text-decoration: underline;
+    /* font-weight: 500; */
+    transition: 1s;
+}
+
+
+.cta-decor:hover{
+    cursor: pointer;
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.Link{
+    text-decoration: none;
 }
