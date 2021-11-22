@@ -113,11 +113,11 @@ module.exports = {
 
         // Check if username
         const userExist = await Users.findOne({ where: { username: req.body.username } })
-        if (!userExist) return res.status(400).send('User is not exist')
+        if (!userExist) return res.status(200).send({ message: 'User is not exist', success: true })
 
         // Check password
         const validPass = await bcrypt.compare(req.body.password, userExist.password)
-        if (!validPass) return res.status(400).send('Invalid password')
+        if (!validPass) return res.status(200).send({ message: 'Invalid Password', success: true })
 
         // Create Token
         let { id, email, username, isActive, roleId } = userExist

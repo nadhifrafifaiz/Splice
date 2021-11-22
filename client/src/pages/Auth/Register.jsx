@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import styles from './Auth.module.css'
 import { FaFacebookSquare, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom'
-import { registerUser } from '../../redux/actions/user'
+import { clearUserMessage, registerUser } from '../../redux/actions/user'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
 
@@ -14,7 +14,6 @@ import { Spinner } from "react-bootstrap";
 function Register() {
     const dispatch = useDispatch()
     const userGlobal = useSelector(state => state.user)
-
     const registerInitialValues = {
         username: "",
         email: "",
@@ -43,6 +42,14 @@ function Register() {
             console.log(error);
         }
     }
+
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearUserMessage())
+            console.log("INI AKU");
+        }
+    }, [])
 
     return (
         <>
@@ -100,7 +107,7 @@ function Register() {
                 </Formik>
 
                 <div className={styles['cta-container']}>
-                    <p className={styles.cta}>Need some space? you can be <Link to="/signup" className={styles.Link}><span className={styles["cta-decor"]}>Anonymous</span></Link> here</p>
+                    <p className={styles.cta}>Need some space? you can be <Link to="/" className={styles.Link}><span className={styles["cta-decor"]}>Anonymous</span></Link> here</p>
                     <p className={styles.cta}>Already have an account? <Link to="/" className={styles.Link}><span className={styles["cta-decor"]}>Login</span></Link> now</p>
                 </div>
             </div>
