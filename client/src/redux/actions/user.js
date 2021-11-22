@@ -37,12 +37,12 @@ export const loginUser = (data) => {
                 username, password
             })
             localStorage.setItem("token_slace", loginResponse.data.token);
+            delete loginResponse.data.token
             dispatch({
                 type: "FETCH_USER_SUCCESS",
                 payload: loginResponse.data
             })
-            console.log(loginResponse);
-            console.log("tes");
+            window.location = "/";
         } catch (error) {
             dispatch({
                 type: "FETCH_USER_FAILED",
@@ -58,5 +58,25 @@ export const clearUserMessage = () => {
         dispatch({
             type: "CLEAR_MESSAGE"
         })
+    }
+}
+
+export const checkLogin = (userLocalStorage) => {
+    return async (dispatch) => {
+        try {
+            const getDataLogin = await axios.post(`${API_URL}/auth/`, {},
+                {
+                    headers: {
+                        authorization: `Bearer ${userLocalStorage}`
+                    }
+                })
+
+            dispatch({
+                type: "FETCH_USER_SUCCESS",
+                payload: { ...getDataLogin.data, isLogin: true }
+            })
+        } catch (error) {
+
+        }
     }
 }

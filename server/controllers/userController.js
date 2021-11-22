@@ -127,10 +127,22 @@ module.exports = {
             return res.status(200).send({ message: "Your account need to be verify" })
         }
 
-        return res.status(200).send({ message: "Successfully login", token: token })
+        return res.status(200).send({ message: "Successfully login", token: token, id, email, username, isActive, roleId })
 
 
 
+    },
+    // Check Login
+    getDataUser: async (req, res) => {
+        try {
+            const { id } = req.user
+            const userExist = await Users.findOne({ where: { id: id } })
+            delete userExist.dataValues.password
+
+            return res.status(200).send(userExist)
+        } catch (error) {
+            return res.send(error)
+        }
     }
 
 }

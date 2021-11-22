@@ -49,7 +49,7 @@ function Register() {
             dispatch(clearUserMessage())
             console.log("INI AKU");
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -108,7 +108,7 @@ function Register() {
 
                 <div className={styles['cta-container']}>
                     <p className={styles.cta}>Need some space? you can be <Link to="/" className={styles.Link}><span className={styles["cta-decor"]}>Anonymous</span></Link> here</p>
-                    <p className={styles.cta}>Already have an account? <Link to="/" className={styles.Link}><span className={styles["cta-decor"]}>Login</span></Link> now</p>
+                    <p className={styles.cta}>Already have an account? <Link to="/login" className={styles.Link}><span className={styles["cta-decor"]}>Login</span></Link> now</p>
                 </div>
             </div>
 

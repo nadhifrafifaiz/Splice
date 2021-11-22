@@ -34,7 +34,7 @@ function SignIn() {
         return () => {
             dispatch(clearUserMessage())
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -43,7 +43,7 @@ function SignIn() {
                 <h4 className={styles.subtitle}>Free, No Judgment, Enjoy</h4>
                 <p className={styles.description}>Sometimes we need a safe place to be ourselves</p>
                 {
-                    userGlobal.message != "" &&
+                    userGlobal.message !== "" &&
                     <p className={styles.error}>{userGlobal.message}</p>
                 }
                 <Formik

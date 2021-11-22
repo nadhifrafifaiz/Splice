@@ -1,13 +1,14 @@
 const init_state = {
     username: "",
     email: "",
-    role: 0,
+    roleId: 0,
     id: 0,
     isActive: false,
     message: "",
     loading: false,
     success: false,
-    error: ""
+    error: "",
+    isLogin: false
 }
 
 
@@ -16,7 +17,7 @@ const reducer = (state = init_state, { type, payload }) => {
         case "FETCH_USER_ONGOING":
             return { ...state, loading: true, success: false }
         case "FETCH_USER_SUCCESS":
-            return { ...state, ...payload, loading: false }
+            return { ...state, ...payload, loading: false, success: true }
         case "FETCH_USER_FAILED":
             return { ...state, ...payload, loading: false }
         case "CLEAR_MESSAGE":
