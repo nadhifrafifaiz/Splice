@@ -42,7 +42,10 @@ export const loginUser = (data) => {
                 type: "FETCH_USER_SUCCESS",
                 payload: loginResponse.data
             })
-            window.location = "/";
+
+            if (loginResponse.data.success) {
+                window.location = "/";
+            }
         } catch (error) {
             dispatch({
                 type: "FETCH_USER_FAILED",

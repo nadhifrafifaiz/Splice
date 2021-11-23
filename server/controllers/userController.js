@@ -26,8 +26,8 @@ module.exports = {
             ...req.body,
             password: hashed,
             isActive: false,
-            profilePhoto: "profile.jpeg",
-            backgroundPhoto: "background.png",
+            profilePhoto: "/images/profilePhotos/profile-default.png",
+            backgroundPhoto: "/images/backgroundPhotos/profile-default.png",
             roleId: 2
         })
 
@@ -113,11 +113,11 @@ module.exports = {
 
         // Check if username
         const userExist = await Users.findOne({ where: { username: req.body.username } })
-        if (!userExist) return res.status(200).send({ message: 'User is not exist', success: true })
+        if (!userExist) return res.status(200).send({ message: 'User is not exist', success: false })
 
         // Check password
         const validPass = await bcrypt.compare(req.body.password, userExist.password)
-        if (!validPass) return res.status(200).send({ message: 'Invalid Password', success: true })
+        if (!validPass) return res.status(200).send({ message: 'Invalid Password', success: false })
 
         // Create Token
         let { id, email, username, isActive, roleId } = userExist
@@ -127,7 +127,7 @@ module.exports = {
             return res.status(200).send({ message: "Your account need to be verify" })
         }
 
-        return res.status(200).send({ message: "Successfully login", token: token, id, email, username, isActive, roleId })
+        return res.status(200).send({ message: "Successfully login", token: token, id, email, username, isActive, roleId, success: true })
 
 
 

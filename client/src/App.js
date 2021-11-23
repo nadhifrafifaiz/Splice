@@ -1,5 +1,5 @@
 import SignIn from './pages/Auth/SignIn';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Register from './pages/Auth/Register';
 import Posts from './pages/Posts/Posts';
 import { useEffect } from 'react';
@@ -24,21 +24,24 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Posts />} />
-        {userGlobal.isLogin === false &&
+      <Switch>
+        <Route path="/" component={Posts} exact />
+
+        {userGlobal.isLogin ?
+          <Redirect to="/" />
+          :
           <>
-            <Route path="/login" element={<SignIn />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" component={SignIn} exact />
+            <Route path="/register" component={Register} exact />
           </>
         }
 
         <Route path="*"
-          element={
-            <PageNotFound />
+          component={
+            PageNotFound
           } />
 
-      </Routes>
+      </Switch>
     </BrowserRouter >
   );
 }
