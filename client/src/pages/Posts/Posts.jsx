@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Navbar from '../../component/navbar/Navbar'
 
 function Posts() {
     const userGlobal = useSelector(state => state.user)
+    const [activeComponent, setActiveComponent] = useState(0)
 
+    useEffect(() => {
+        setActiveComponent(1)
+    }, [])
 
     return (
         <>
-            <Navbar />
+            <Navbar activeComponent={activeComponent} />
             {
                 userGlobal.isLogin ?
                     <div>
-                        AKU DAH MASUK, aku {userGlobal.username}
+                        AKU DAH MASUK, aku {userGlobal.username}, {activeComponent}
                     </div>
                     :
                     <div>

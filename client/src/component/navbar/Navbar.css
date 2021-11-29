@@ -26,11 +26,23 @@
     font-size: 1.5rem;
     color: var(--primary);
 }
+.link-tes{
+    margin: 0 2em ;
+    padding: 0 0;
+    font-size: 1.5rem;
+    color: var(--white);
+}
 
 .navbar-photo{
     margin: 0 2em ;
     width: 1.8rem;
     border-radius: 50%;
+}
+.navbar-photo-tes{
+    margin: 0 2em ;
+    width: 1.8rem;
+    border-radius: 50%;
+    border: 1px solid red;
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -51,6 +63,13 @@
         color: var(--primary);
     }
 
+    .link-tes{
+        margin: 0 1em ;
+        padding: 0 0;
+        font-size: 2rem;
+        color: var(--white);
+    }
+
     .navbar-logo{
         margin-top: 2rem;
     }
@@ -59,6 +78,12 @@
         margin: 0 2em ;
         width: 2rem;
         border-radius: 50%;
+    }
+    .navbar-photo-tes{
+        margin: 0 2em ;
+        width: 2rem;
+        border-radius: 50%;
+        border: 1px solid red;
     }
 
     .navbar-links{
@@ -89,11 +114,23 @@
         font-size: 1.5rem;
         color: var(--primary);
     }
+    .link-tes{
+        margin: 0 1em ;
+        padding: 0 0;
+        font-size: 1.5rem;
+        color: var(--white);
+    }
     
     .navbar-photo{
         margin: 0 1em ;
         width: 1.5rem;
         border-radius: 50%;
+    }
+    .navbar-photo-tes{
+        margin: 0 1em ;
+        width: 1.5rem;
+        border-radius: 50%;
+        border: 1px solid red;
     }
 
     .navbar-links{

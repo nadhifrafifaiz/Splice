@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { checkLogin } from './redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import PageNotFound from './pages/PageNotFound';
+import Profile from './pages/Profile/Profile';
 
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/" component={Posts} exact />
+        <Route path="/profile" component={Profile} exact />
+
 
         {userGlobal.isLogin ?
           <Redirect to="/" />
