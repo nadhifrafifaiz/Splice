@@ -7,13 +7,16 @@ import { checkLogin } from './redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import PageNotFound from './pages/PageNotFound';
 import Profile from './pages/Profile/Profile';
+import { getALlPosts } from './redux/actions/post';
 
 
 function App() {
   const dispatch = useDispatch()
   const userGlobal = useSelector(state => state.user)
   const userLocalStorage = localStorage.getItem("token_slace")
+
   const keepLogin = () => {
+    dispatch(getALlPosts())
     if (userLocalStorage) {
       dispatch(checkLogin(userLocalStorage))
     }

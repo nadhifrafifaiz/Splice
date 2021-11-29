@@ -4,7 +4,25 @@ import Navbar from '../../component/navbar/Navbar'
 
 function Posts() {
     const userGlobal = useSelector(state => state.user)
+    const postGlobal = useSelector(state => state.post)
     const [activeComponent, setActiveComponent] = useState(0)
+
+
+    const renderPost = () => {
+        return postGlobal.posts.map((post, index) => {
+            return (
+                <div id={index}>
+                    {/* aku {userGlobal.username} */}
+                    <h5>
+                        {post.postTitle}
+                    </h5>
+                    <p>
+                        {post.postBody}
+                    </p>
+                </div>
+            )
+        })
+    }
 
     useEffect(() => {
         setActiveComponent(1)
@@ -16,7 +34,7 @@ function Posts() {
             {
                 userGlobal.isLogin ?
                     <div>
-                        AKU DAH MASUK, aku {userGlobal.username}, {activeComponent}
+                        {renderPost()}
                     </div>
                     :
                     <div>
