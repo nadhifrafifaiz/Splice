@@ -73,11 +73,31 @@ export const checkLogin = (userLocalStorage) => {
                         authorization: `Bearer ${userLocalStorage}`
                     }
                 })
+            localStorage.setItem("token_slace", userLocalStorage);
 
             dispatch({
                 type: "FETCH_USER_SUCCESS",
                 payload: { ...getDataLogin.data, isLogin: true }
             })
+        } catch (error) {
+
+        }
+    }
+}
+
+export const userAuth = (token) => {
+    return async (dispatch) => {
+        try {
+            axios.post(`${API_URL}/auth/verification`,
+                {},
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+
+            dispatch(checkLogin(token))
         } catch (error) {
 
         }

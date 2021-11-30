@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../../helper";
 
-export const getALlPosts = () => {
+export const getAllPosts = () => {
     return async (dispatch) => {
         try {
             dispatch({

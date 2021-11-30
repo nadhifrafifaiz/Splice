@@ -41,7 +41,7 @@ module.exports = {
             from: `Admin splace`,
             to: `${email}`,
             subject: 'Account Verification',
-            html: `<a href='http://localhost:3000/authentication/${token}'>Click here for verification your account<a/>`
+            html: `<a href='http://localhost:3000/verification/${token}'>Click here for verification your account<a/>`
         }
 
         transporter.sendMail(mail, async (errMail, resMail) => {
@@ -79,7 +79,7 @@ module.exports = {
             from: `Admin splace`,
             to: `${email}`,
             subject: 'Account Verification',
-            html: `<a href='http://localhost:3000/authentication/${token}'>Click here for verification your account<a/>`
+            html: `<a href='http://localhost:3000/verification/${token}'>Click here for verificationNNNN your account<a/>`
         }
 
         transporter.sendMail(mail, async (errMail, resMail) => {

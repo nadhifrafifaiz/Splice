@@ -6,6 +6,7 @@ import { AiFillHome } from "react-icons/ai"
 import { BsClockHistory } from "react-icons/bs"
 import './Navbar.css'
 import { API_URL } from '../../helper';
+import { Link } from 'react-router-dom'
 
 function Navbar({ activeComponent }) {
     const userGlobal = useSelector(state => state.user)
@@ -17,14 +18,23 @@ function Navbar({ activeComponent }) {
                 <h3 className="navbar-logo">Slace</h3>
             </div>
             <div className="navbar-links">
-                <AiFillHome className={"link" + (activeComponent === 1 ? "-tes" : "")} />
-                <FaHeart className="link" />
+                <Link to="/">
+                    <AiFillHome className={"link" + (activeComponent === 1 ? "-tes" : "")} />
+                </Link>
+                <Link to="/favorite">
+                    <FaHeart className="link" />
+                </Link>
+
                 {
                     userGlobal.isLogin &&
-                    <img src={`${API_URL}` + profilePhoto} alt="tes" className={"navbar-photo" + (activeComponent === 3 ? "-tes" : "")} />
+                    <Link to="/profile">
+                        <img src={`${API_URL}` + profilePhoto} alt="tes" className={"navbar-photo" + (activeComponent === 3 ? "-tes" : "")} />
+                    </Link>
                 }
                 <BsClockHistory className="link" />
-                <ImExit className="link" />
+                <Link to="/login">
+                    <ImExit className="link" />
+                </Link>
             </div>
         </div>
     )

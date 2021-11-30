@@ -31,17 +31,11 @@ function Posts() {
     return (
         <>
             <Navbar activeComponent={activeComponent} />
-            {
-                userGlobal.isLogin ?
-                    <div>
-                        {renderPost()}
-                    </div>
-                    :
-                    <div>
-                        AKU Gak MASUK
-                    </div>
 
-            }
+            <div>
+                {renderPost()}
+            </div>
+
         </>
 
     )

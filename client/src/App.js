@@ -1,13 +1,15 @@
-import SignIn from './pages/Auth/SignIn';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Register from './pages/Auth/Register';
-import Posts from './pages/Posts/Posts';
 import { useEffect } from 'react';
 import { checkLogin } from './redux/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from './redux/actions/post';
+
+import SignIn from './pages/Auth/SignIn';
+import Register from './pages/Auth/Register';
+import Posts from './pages/Posts/Posts';
 import PageNotFound from './pages/PageNotFound';
 import Profile from './pages/Profile/Profile';
-import { getALlPosts } from './redux/actions/post';
+import Verification from "./pages/Auth/Verification";
 
 
 function App() {
@@ -16,13 +18,13 @@ function App() {
   const userLocalStorage = localStorage.getItem("token_slace")
 
   const keepLogin = () => {
-    dispatch(getALlPosts())
     if (userLocalStorage) {
       dispatch(checkLogin(userLocalStorage))
     }
   }
 
   useEffect(() => {
+    dispatch(getAllPosts())
     keepLogin()
   }, [])
 
@@ -31,6 +33,7 @@ function App() {
       <Switch>
         <Route path="/" component={Posts} exact />
         <Route path="/profile" component={Profile} exact />
+        <Route path="/verification/:token" component={Verification} exact />
 
 
         {userGlobal.isLogin ?
