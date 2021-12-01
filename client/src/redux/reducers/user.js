@@ -22,6 +22,8 @@ const reducer = (state = init_state, { type, payload }) => {
             return { ...state, ...payload, loading: false }
         case "CLEAR_MESSAGE":
             return { ...state, loading: false, success: false, error: "", message: "" }
+        case "USER_LOGOUT":
+            return { ...init_state, isLogin: false };
         default:
             return state
     }

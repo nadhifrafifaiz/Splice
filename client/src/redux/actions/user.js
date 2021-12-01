@@ -103,3 +103,21 @@ export const userAuth = (token) => {
         }
     }
 }
+
+export const userLogout = () => {
+    return async (dispatch) => {
+        try {
+            localStorage.removeItem("token_slace");
+            dispatch({
+                type: "USER_LOGOUT",
+            });
+            // dispatch({
+            //     type: "ADMIN_LOGOUT",
+            // });
+            alert("logout success");
+            ;
+        } catch (error) {
+            alert(error);
+        }
+    }
+}
