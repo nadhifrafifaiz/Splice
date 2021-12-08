@@ -1,4 +1,5 @@
 const PostLikes = require("./PostLikes")
+const { Users } = require("./index")
 
 module.exports = (sequelize, DataTypes) => {
     const Posts = sequelize.define("Posts", {
@@ -18,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         Posts.hasMany(models.Comments, {
             onDelete: "cascade"
         })
+
+        Posts.belongsTo(models.Users, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
     }
 
 

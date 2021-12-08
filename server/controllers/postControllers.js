@@ -30,7 +30,20 @@ module.exports = {
     },
     GetPosts: async (req, res) => {
         try {
-            const listOfPosts = await Posts.findAll()
+            // const listOfPosts = await Posts.findAll()
+            const listOfPosts = await Posts.findAll({
+                include: [
+                    {
+                        model: Users,
+                        required: false
+                    }
+                ],
+            })
+
+            for (let i = 0; i < listOfPosts.length; i++) {
+                delete listOfPosts[i].dataValues.User.dataValues.password
+            }
+
             res.status(200).send(listOfPosts)
         } catch (error) {
             res.status(400).send(error)
